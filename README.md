@@ -26,3 +26,7 @@ REFRESH_TOKEN_SALT='salt for reresh token'
 #Logs
 LOGGING_DIR='logs'
 LOGGING_LEVEL='info'
+
+4. Run the migrations and seeds with scripts.
+yarn migrate
+yarn seed

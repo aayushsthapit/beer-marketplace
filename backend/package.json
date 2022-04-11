@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "make:migration": "knex migrate:make --knexfile knexfile.ts",
     "migrate": "knex migrate:latest",
+    "make:seed": "knex seed:make --knexfile knexfile.ts",
+    "seed": "knex seed:run --knexfile knexfile.ts",
     "rollback": "knex migrate:rollback --knexfile knexfile.ts",
     "start:dev": "tsc && nodemon --watch src",
     "build": "rimraf dist && babel src -D --out-dir dist",
