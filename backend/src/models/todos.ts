@@ -3,9 +3,9 @@ import { Model } from 'objection';
 import { Status } from '../constants/enums';
 
 /**
- * Model for table "todo"
+ * Model for table "todos"
  */
-class Todo extends Model {
+class Todos extends Model {
     id!: number;
     title!: string;
     status!: Status;
@@ -13,8 +13,8 @@ class Todo extends Model {
     updatedAt!: Date;
 
     static get tableName() {
-        return 'todo';
+        return 'todos';
     }
 }
 
-export default Todo;
+export default Todos;
