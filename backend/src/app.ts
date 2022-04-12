@@ -5,13 +5,12 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import express from 'express';
 import { Model } from 'objection';
+
 import knexConfig from '../knexfile';
 import bodyParser from 'body-parser';
-import compression from 'compression';
-
 import router from './routes/routes';
+import compression from 'compression';
 import json from './middlewares/json';
-import authRouter from './routes/authRoutes';
 import { logger, stream } from './utils/logger';
 import * as errorHandler from './middlewares/errorHandler';
 
@@ -43,7 +42,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(json);
 
 // API Routes
-app.use('/auth', authRouter);
 app.use('/', router);
 
 // Error Middlewares
