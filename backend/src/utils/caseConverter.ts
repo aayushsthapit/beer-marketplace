@@ -16,16 +16,16 @@ export function convertToCamelCase(str: string): string {
  * @param {Object} obj
  * @returns {Object}
  */
-export function convertObjKeysToCamelCase(obj: Object): Object {
-    return mapKeys(obj, (value, key) => convertToCamelCase(key));
+export function convertObjKeysToCamelCase(obj: Object): Object{
+    return mapKeys(obj, (_, key) => convertToCamelCase(key));
 }
 
 /**
  * Converts an list of object's keys to camelcase.
  * 
- * @param {Object[]} objList
- * @returns {Object[]}
+ * @param {T[]} objList
+ * @returns {T[]}
  */
-export function convertObjListToCamelCase(objList: Object[]): Object[] {
-    return objList.map(obj =>convertObjKeysToCamelCase(obj));
+export function convertObjListToCamelCase<T>(objList: T[]): T[] {
+    return objList.map(obj =>convertObjKeysToCamelCase(obj) as T);
 }
