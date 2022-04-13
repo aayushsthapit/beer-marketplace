@@ -17,6 +17,7 @@ interface TodoListItemProps {
 // Component for each item of the list of todos.
 function TodoListItem(props: TodoListItemProps) {
     const { todo: { title, status, subtasks } } = props;
+    const completedSubtasksCount = subtasks.filter(subtask=>subtask.status===Status.COMPLETED).length;
 
     return (
         <Accordion>
@@ -29,8 +30,9 @@ function TodoListItem(props: TodoListItemProps) {
                     <Checkbox
                         checked={status === Status.COMPLETED}
                         onClick={(event) => event.stopPropagation()}
-                    />
+                        />
                     {title}
+                    <span style={{paddingLeft: 70}}>{`${completedSubtasksCount} of ${subtasks.length} completed`} </span>
                 </Typography>
             </AccordionSummary>
             <AccordionDetails>
