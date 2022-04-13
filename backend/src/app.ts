@@ -6,9 +6,9 @@ import helmet from 'helmet';
 import express from 'express';
 import { Model } from 'objection';
 
+import router from './routes';
 import knexConfig from '../knexfile';
 import bodyParser from 'body-parser';
-import router from './routes/routes';
 import compression from 'compression';
 import json from './middlewares/json';
 import { logger, stream } from './utils/logger';

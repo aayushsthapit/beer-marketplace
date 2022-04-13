@@ -39,7 +39,7 @@ function TodoListItem(props: TodoListItemProps) {
                 <Typography>
                     {subtasks.length
                     ? subtasks.map(subtask => <SubtasksListItem subtask={subtask} />)
-                    : <div> No subtasks added for the todo </div>
+                    : <div> No subtasks added for this todo </div>
                 }
                 </Typography>
             </AccordionDetails>

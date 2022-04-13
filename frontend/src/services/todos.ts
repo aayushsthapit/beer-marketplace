@@ -8,7 +8,7 @@ import endpoints from '../constants/endpoints';
  * @returns {Promise<Todos[]>}
  */
 export async function getTodos(): Promise<Todos[]> {
-    const todos = await http.get(endpoints.todos);
+    const todos = await http.post(endpoints.todos);
 
     return todos.data;
 }
