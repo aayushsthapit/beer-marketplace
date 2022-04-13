@@ -12,7 +12,8 @@ export async function seed(knex: Knex): Promise<void> {
 
     // Inserts seed entries
     await knex("todos").insert([
-        { id: 1, title: "Do laundry", status: "PENDING" }
+        { id: 1, title: "Do laundry", status: "PENDING" },
+        { id: 2, title: "Do Something else", status: "PENDING" }
     ]);
     await knex("subtasks").insert([
         { id: 1, todos_id: 1, title: "Pick up the clothes", status: "PENDING" },

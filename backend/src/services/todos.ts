@@ -34,5 +34,8 @@ export async function createTodo(title: string): Promise<TodosInterface> {
     }
     const todos = await Todos.query().insert(insertParams);
 
-    return todos;
+    return {
+        ...todos,
+        subtasks: []
+    };
 }

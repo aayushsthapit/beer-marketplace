@@ -38,7 +38,7 @@ function TodoListItem(props: TodoListItemProps) {
             <AccordionDetails>
                 <Typography>
                     {subtasks.length
-                    ? subtasks.map(subtask => <SubtasksListItem subtask={subtask} />)
+                    ? subtasks.map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id}/>)
                     : <div> No subtasks added for this todo </div>
                 }
                 </Typography>
