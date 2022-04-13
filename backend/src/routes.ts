@@ -12,6 +12,6 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.get('/todos', todosController.getTodos);
-router.post('/todos', validateSchema(todoCreateSchema), todosController.getTodos)
+router.post('/todos', validateSchema(todoCreateSchema), todosController.createTodo);
 
 export default router;
