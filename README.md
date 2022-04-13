@@ -30,3 +30,7 @@ LOGGING_LEVEL='info'
 4. Run the migrations and seeds with scripts.
 yarn migrate
 yarn seed
+
+
+Web-app
+1. Add .env
