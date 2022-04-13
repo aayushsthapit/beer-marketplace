@@ -1,5 +1,6 @@
 import React from 'react';
 
+import TodoListItem from './TodoListItem';
 import TodosInterface from '../domain/todos';
 import * as todosService from '../services/todos';
 
@@ -19,15 +20,9 @@ function Todo() {
     }
 
     return (
-        <div>
+        <div className='todo'>
             <h2>Todo App</h2>
-            {todos.map(todo => (
-                <div>
-                    <span> {todo.title}</span>
-                    <span> {todo.status}</span>
-                </div>
-            ))
-            }
+            {todos.map(todo => <TodoListItem todo={todo}/>)}
         </div>
     )
 }
