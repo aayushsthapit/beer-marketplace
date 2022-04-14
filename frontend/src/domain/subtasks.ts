@@ -9,4 +9,8 @@ interface Subtasks {
     todosId: number;
 }
 
+export interface NormalizedSubtasks {
+    [key: number]: Subtasks
+}
+
 export default Subtasks;

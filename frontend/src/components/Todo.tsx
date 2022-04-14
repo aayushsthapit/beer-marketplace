@@ -1,18 +1,21 @@
 import React from 'react';
 
 import TodoListItem from './TodoListItem';
-import TodosInterface from '../domain/todos';
+import InputForm from './common/InputForm';
 import * as todosService from '../services/todos';
+import { NormalizedTodos } from '../domain/todos';
+import * as subtasksService from '../services/subtasks';
 
 // Component for Todo.
 function Todo() {
-    const [todos, setTodos] = React.useState<TodosInterface[]>([]);
+    const [todos, setTodos] = React.useState<NormalizedTodos>({});
     const [formInput, setFormInput] = React.useState<string>('');
 
     React.useEffect(() => {
         (async () => {
             const todos = await todosService.getTodos();
-            setTodos(todos);
+            const normalizedTodos = todosService.getNormalizedTodoandSubtasks(todos);
+            setTodos(normalizedTodos);
         })()
     }, []);
 
@@ -23,27 +26,40 @@ function Todo() {
      */
     async function createNewTodo(title: string) {
         const newTodo = await todosService.createNewTodo({ title });
-        setTodos([...todos, newTodo]);
+        setTodos({
+            ...todos,
+            [newTodo.id]: newTodo
+        });
         setFormInput('');
+    }
+
+    async function createNewSubtask(title: string, todosId: number) {
+        const newSubtask = await subtasksService.createNewSubtask({ title, todosId });
+        setTodos({
+            ...todos,
+            [todosId]: {
+                ...todos[todosId],
+                subtasks:{
+                    ...todos[todosId].subtasks,
+                    [newSubtask.id]: newSubtask
+                }
+            }
+        });
     }
 
     return (
         <div className='todo'>
             <h2>Todo App</h2>
-            <form onSubmit={(event) => {
-                event.preventDefault();
-                createNewTodo(formInput);
-            }}>
-                <input
-                    name="title"
-                    value={formInput}
-                    onChange={(event) => setFormInput(event.target.value)}
-                    placeholder="What to do?"
-                />
-                <button type="submit">Submit</button>
-            </form>
-            {todos.length
-                ? todos.map(todo => <TodoListItem todo={todo} key={todo.id} />)
+            <InputForm
+                btnTitle='New List'
+                formInput={formInput}
+                placeHolder='What to do?'
+                setFormInput={setFormInput}
+                onSubmitHandler={createNewTodo}
+            />
+
+            {Object.values(todos).length
+                ? Object.values(todos).map(todo => <TodoListItem todo={todo} key={todo.id} createNewSubtask={createNewSubtask} />)
                 : <>Create a todo to get started</>
             }
         </div>

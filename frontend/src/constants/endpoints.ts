@@ -1,6 +1,7 @@
 // Backend API endpoints
 const endpoints = {
-    todos: '/todos'
+    todos: '/todos',
+    subtasks: '/subtasks'
 }
 
 export default endpoints;
