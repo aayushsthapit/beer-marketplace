@@ -3,6 +3,7 @@ import React from 'react';
 import TodoListItem from './TodoListItem';
 import InputForm from './common/InputForm';
 import { Status } from '../constants/enums';
+import { normalize } from '../utils/normalize';
 import * as todosService from '../services/todos';
 import { NormalizedTodos } from '../domain/todos';
 import * as subtasksService from '../services/subtasks';
@@ -63,11 +64,40 @@ function Todo() {
      */
     async function updateTodo(todosId: number, status: Status) {
         const updatedTodo = await todosService.updateTodo({ todosId, status });
+        const normalizedSubtasks = updatedTodo.subtasks && normalize(updatedTodo.subtasks, 'id');
+
         setTodos({
             ...todos,
             [todosId]: {
                 ...todos[todosId],
-                ...updatedTodo
+                ...updatedTodo,
+                ...(normalizedSubtasks && { subtasks: normalizedSubtasks })
+            }
+        });
+    }
+
+    /**
+     * Handler to update existing subtask.
+     * 
+     * @param {number} subtaskId
+     * @param {Status} status 
+     */
+    async function updateSubtask(subtaskId: number, status: Status) {
+        const updatedSubtask = await subtasksService.updateSubtask({ subtaskId, status });
+        const { subtask: { todosId }, todoStatus } = updatedSubtask;
+
+        setTodos({
+            ...todos,
+            [todosId]: {
+                ...todos[todosId],
+                ...(todoStatus && { status: todoStatus }),
+                subtasks: {
+                    ...todos[todosId].subtasks,
+                    [subtaskId]: {
+                        ...todos[todosId].subtasks[subtaskId],
+                        ...updatedSubtask.subtask
+                    }
+                }
             }
         });
     }
@@ -89,6 +119,7 @@ function Todo() {
                         todo={todo}
                         key={todo.id}
                         updateTodo={updateTodo}
+                        updateSubtask={updateSubtask}
                         createNewSubtask={createNewSubtask}
                     />)
                 : <>Create a todo to get started</>

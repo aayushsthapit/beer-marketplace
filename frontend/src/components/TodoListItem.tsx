@@ -14,6 +14,7 @@ import { TodosWithNormalizedSubtasks } from '../domain/todos';
 interface TodoListItemProps {
     todo: TodosWithNormalizedSubtasks;
     updateTodo: (todosId: number, status: Status) => void;
+    updateSubtask: (subtaskId: number, status: Status) => void;
     createNewSubtask: (title: string, todosId: number) => void;
 }
 
@@ -21,6 +22,7 @@ interface TodoListItemProps {
 function TodoListItem(props: TodoListItemProps) {
     const {
         updateTodo,
+        updateSubtask,
         createNewSubtask,
         todo: { id, title, status, subtasks }
     } = props;
@@ -50,13 +52,16 @@ function TodoListItem(props: TodoListItemProps) {
                         onClick={(event) => event.stopPropagation()}
                     />
                     {title}
-                    <span style={{ paddingLeft: 70 }}>{`${completedSubtasksCount} of ${totalSubtasksCount} completed`} </span>
+                    <span style={{ paddingLeft: 70 }}>
+                        {`${completedSubtasksCount} of ${totalSubtasksCount} completed`}
+                    </span>
                 </Typography>
             </AccordionSummary>
+
             {/* List of subtasks of a todo item */}
             <AccordionDetails>
                 <Typography>
-                    {subtasksList.map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id} />)}
+                    {subtasksList.map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id} updateSubtask={updateSubtask}/>)}
                 </Typography>
                 <InputForm
                     btnTitle='New Step'
