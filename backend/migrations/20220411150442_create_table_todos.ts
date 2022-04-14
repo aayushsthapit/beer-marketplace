@@ -8,7 +8,7 @@ import * as Knex from "knex";
  */
 export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable('todos', table => {
-        table.increments();
+        table.increments('id');
         table.string('title').notNullable();
         table.enu('status', ['PENDING', 'COMPLETED']).notNullable();
         table.timestamp('created_at')

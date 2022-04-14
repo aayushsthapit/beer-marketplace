@@ -8,7 +8,7 @@ import * as Knex from "knex";
  */
 export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable('subtasks', table => {
-        table.increments();
+        table.increments('id');
         table.integer('todos_id').references('id').inTable('todos').notNullable();
         table.string('title').notNullable();
         table.enu('status', ['PENDING', 'COMPLETED']).notNullable();
