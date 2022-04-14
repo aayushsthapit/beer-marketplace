@@ -1,6 +1,7 @@
 import Todos from '../models/todos';
 import Subtasks from '../models/subtasks';
 import { Status } from '../constants/enums';
+import SubtasksInterface from '../domain/subtasks';
 
 interface SubtaskRequestParams {
     title: string;
@@ -11,9 +12,9 @@ interface SubtaskRequestParams {
  * Create a new subtask associated with an existing todo item.
  *
  * @param {SubtaskRequestParams} params
- * @returns {Promise<void>}
+ * @returns {Promise<SubtasksInterface>}
  */
-export async function createSubtask(params: SubtaskRequestParams) {
+export async function createSubtask(params: SubtaskRequestParams):Promise<SubtasksInterface> {
     const { todosId } = params;
     const insertParams = {
         ...params,
@@ -24,7 +25,5 @@ export async function createSubtask(params: SubtaskRequestParams) {
     await Todos.query().findById(todosId).throwIfNotFound();
     const subtask = await Subtasks.query().insert(insertParams);
 
-    return {
-        subtask
-    };
+    return subtask;
 }
