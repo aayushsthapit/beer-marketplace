@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import express from 'express';
-import { Model } from 'objection';
+import { Model, knexSnakeCaseMappers } from 'objection';
 
 import router from './routes';
 import knexConfig from '../knexfile';
@@ -23,7 +23,10 @@ const APP_PORT =
 const APP_HOST = process.env.APP_HOST || '0.0.0.0';
 
 // Initialize knex.
-const knex = Knex(knexConfig);
+const knex = Knex({
+  ...knexConfig,
+  ...knexSnakeCaseMappers()
+});
 
 // Bind all Models to a knex instance.
 Model.knex(knex);

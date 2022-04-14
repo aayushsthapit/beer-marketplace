@@ -25,11 +25,12 @@ class Todos extends Model {
           modelClass: Subtasks,
           join: {
             from: 'todos.id',
-            to: 'subtasks.todos_id'
+            to: 'subtasks.todosId'
           }
         }
     }
 
+    // Get list of todos with associated subtasks.
     static getTodos(): Promise<TodosInterface[]> {
       return this.query().withGraphFetched('subtasks');
   }

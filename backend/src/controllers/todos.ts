@@ -10,7 +10,7 @@ import * as todosService from '../services/todos';
  * @param {NextFunction} next
  */
 export function getTodos(req: Request, res: Response, next: NextFunction) {
-  todosService.getTodos()
+  return todosService.getTodos()
     .then((data) => res.json(data))
     .catch((err) => next(err))
 }
@@ -24,7 +24,8 @@ export function getTodos(req: Request, res: Response, next: NextFunction) {
  */
 export function createTodo(req: Request, res: Response, next: NextFunction) {
   const { title } = req.body;
-  todosService.createTodo(title)
+  
+  return todosService.createTodo(title)
     .then((data) => res.json(data))
     .catch((err) => next(err))
 }

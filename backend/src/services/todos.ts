@@ -1,9 +1,6 @@
 import Todos from '../models/todos';
-import TodosInterface from '../domain/todos';
-import SubtasksInterface from '../domain/subtasks';
-
 import { Status } from '../constants/enums';
-import { convertObjListToCamelCase } from '../utils/caseConverter';
+import TodosInterface from '../domain/todos';
 
 /**
  * Retrieve a list of todos and associated subtasks.
@@ -13,16 +10,11 @@ import { convertObjListToCamelCase } from '../utils/caseConverter';
 export async function getTodos(): Promise<TodosInterface[]> {
     const todos: TodosInterface[] = await Todos.getTodos();
 
-    return convertObjListToCamelCase<TodosInterface>(
-        todos.map(todo => ({
-            ...todo,
-            subtasks: convertObjListToCamelCase<SubtasksInterface>(todo.subtasks)
-        })
-        ));
+    return todos;
 }
 
 /**
- * Creates a new todo item.
+ * Create a new todo item.
  *
  * @param {string} title
  * @returns {Promise<TodosInterface>}
