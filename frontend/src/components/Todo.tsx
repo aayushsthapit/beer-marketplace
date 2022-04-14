@@ -2,6 +2,7 @@ import React from 'react';
 
 import TodoListItem from './TodoListItem';
 import InputForm from './common/InputForm';
+import { Status } from '../constants/enums';
 import * as todosService from '../services/todos';
 import { NormalizedTodos } from '../domain/todos';
 import * as subtasksService from '../services/subtasks';
@@ -10,6 +11,7 @@ import * as subtasksService from '../services/subtasks';
 function Todo() {
     const [todos, setTodos] = React.useState<NormalizedTodos>({});
     const [formInput, setFormInput] = React.useState<string>('');
+    const todoList = Object.values(todos);
 
     React.useEffect(() => {
         (async () => {
@@ -33,16 +35,39 @@ function Todo() {
         setFormInput('');
     }
 
+    /**
+     * Handler to create a new subtask.
+     *
+     * @param {string} title
+     * @param {number} todosId
+     */
     async function createNewSubtask(title: string, todosId: number) {
         const newSubtask = await subtasksService.createNewSubtask({ title, todosId });
         setTodos({
             ...todos,
             [todosId]: {
                 ...todos[todosId],
-                subtasks:{
+                subtasks: {
                     ...todos[todosId].subtasks,
                     [newSubtask.id]: newSubtask
                 }
+            }
+        });
+    }
+
+    /**
+     * Handler to update existing todo item.
+     *
+     * @param {number} todosId
+     * @param {Status} status
+     */
+    async function updateTodo(todosId: number, status: Status) {
+        const updatedTodo = await todosService.updateTodo({ todosId, status });
+        setTodos({
+            ...todos,
+            [todosId]: {
+                ...todos[todosId],
+                ...updatedTodo
             }
         });
     }
@@ -58,8 +83,14 @@ function Todo() {
                 onSubmitHandler={createNewTodo}
             />
 
-            {Object.values(todos).length
-                ? Object.values(todos).map(todo => <TodoListItem todo={todo} key={todo.id} createNewSubtask={createNewSubtask} />)
+            {todoList.length
+                ? todoList.map(todo =>
+                    <TodoListItem
+                        todo={todo}
+                        key={todo.id}
+                        updateTodo={updateTodo}
+                        createNewSubtask={createNewSubtask}
+                    />)
                 : <>Create a todo to get started</>
             }
         </div>

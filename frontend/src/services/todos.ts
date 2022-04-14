@@ -1,5 +1,6 @@
 import http from '../utils/http';
 import Subtasks from '../domain/subtasks';
+import { Status } from '../constants/enums';
 import { normalize } from '../utils/normalize';
 import endpoints from '../constants/endpoints';
 import Todos, { NormalizedTodos, TodosWithNormalizedSubtasks } from '../domain/todos';
@@ -41,4 +42,18 @@ export function getNormalizedTodoandSubtasks(todos: Todos[]): NormalizedTodos {
     const normalizedTodos = normalize<TodosWithNormalizedSubtasks>(todosWithNormalizedSubtasks, 'id');
 
     return normalizedTodos;
+}
+
+/**
+ * Updates an existing todo item.
+ *
+ * @param {{ status: Status, todosId: number} params
+ * @returns { Promise<Todos>}
+ */
+export async function updateTodo(params: { status: Status, todosId: number }): Promise<Todos> {
+    const { todosId, status } = params;
+    const url = `${endpoints.todos}/${todosId}`;
+    const todos = await http.patch(url, { status });
+
+    return todos.data;
 }

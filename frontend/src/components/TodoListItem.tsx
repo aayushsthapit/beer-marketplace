@@ -13,42 +13,57 @@ import { TodosWithNormalizedSubtasks } from '../domain/todos';
 
 interface TodoListItemProps {
     todo: TodosWithNormalizedSubtasks;
-    createNewSubtask: (title: string, todosId: number) => void
+    updateTodo: (todosId: number, status: Status) => void;
+    createNewSubtask: (title: string, todosId: number) => void;
 }
 
 // Component for each item of the list of todos.
 function TodoListItem(props: TodoListItemProps) {
-    const { todo: { id, title, status, subtasks }, createNewSubtask } = props;
+    const {
+        updateTodo,
+        createNewSubtask,
+        todo: { id, title, status, subtasks }
+    } = props;
     const [formInput, setFormInput] = React.useState<string>('');
-    const completedSubtasksCount = Object.values(subtasks).filter(subtask => subtask.status === Status.COMPLETED).length;
-    const totalSubtasksCount = Object.keys(subtasks).length;
+
+    const subtasksList = Object.values(subtasks);
+    const completedSubtasksCount = subtasksList.filter(subtask => subtask.status === Status.COMPLETED).length;
+    const totalSubtasksCount = subtasksList.length;
 
     return (
         <Accordion>
+            {/* Todo title content */}
             <AccordionSummary
+                id="panel1a-header"
                 expandIcon={<ExpandMoreIcon />}
                 aria-controls="panel1a-content"
-                id="panel1a-header"
             >
                 <Typography>
                     <Checkbox
                         checked={status === Status.COMPLETED}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                            const status = event.target.checked
+                                ? Status.COMPLETED
+                                : Status.PENDING;
+                            updateTodo(id, status);
+                        }}
                         onClick={(event) => event.stopPropagation()}
                     />
                     {title}
                     <span style={{ paddingLeft: 70 }}>{`${completedSubtasksCount} of ${totalSubtasksCount} completed`} </span>
                 </Typography>
             </AccordionSummary>
+            {/* List of subtasks of a todo item */}
             <AccordionDetails>
                 <Typography>
-                    {Object.values(subtasks).map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id} />)}
+                    {subtasksList.map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id} />)}
                 </Typography>
                 <InputForm
                     btnTitle='New Step'
                     formInput={formInput}
                     setFormInput={setFormInput}
                     placeHolder='What are the steps?'
-                    onSubmitHandler={async ()=>{
+                    onSubmitHandler={async () => {
                         await createNewSubtask(formInput, id);
                         setFormInput('');
                     }}
