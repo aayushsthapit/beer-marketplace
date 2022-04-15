@@ -11,10 +11,10 @@ import { UpdateSubtaskParams } from '../domain/responses/subtasks';
  * @param {{title: string, todosId: number}} params
  * @returns {Promise<Subtasks>}
  */
-export async function createNewSubtask(params: { title: string, todosId: number }): Promise<Subtasks> {
-    const subtask = await http.post(endpoints.subtasks, params);
+export async function createNewSubtask(params: { title: string; todosId: number }): Promise<Subtasks> {
+  const subtask = await http.post(endpoints.subtasks, params);
 
-    return subtask.data;
+  return subtask.data;
 }
 
 /**
@@ -23,12 +23,12 @@ export async function createNewSubtask(params: { title: string, todosId: number 
  * @param {{ status: Status, subtaskId: number} params
  * @returns { Promise<UpdateSubtask>}
  */
-export async function updateSubtask(params: { status: Status, subtaskId: number }): Promise<UpdateSubtaskParams> {
-    const { subtaskId, status } = params;
-    const url = `${endpoints.subtasks}/${subtaskId}`;
-    const todos = await http.patch(url, { status });
+export async function updateSubtask(params: { status: Status; subtaskId: number }): Promise<UpdateSubtaskParams> {
+  const { subtaskId, status } = params;
+  const url = `${endpoints.subtasks}/${subtaskId}`;
+  const todos = await http.patch(url, { status });
 
-    return todos.data;
+  return todos.data;
 }
 
 /**
@@ -39,21 +39,28 @@ export async function updateSubtask(params: { status: Status, subtaskId: number 
  * @param {number} subtaskId
  * @returns {NormalizedTodos}
  */
-export function resolveStateForUpdatedSubtask(todos: NormalizedTodos, updatedSubtask: UpdateSubtaskParams, subtaskId: number): NormalizedTodos {
-    const { subtask: { todosId }, todoStatus } = updatedSubtask;
+export function resolveStateForUpdatedSubtask(
+  todos: NormalizedTodos,
+  updatedSubtask: UpdateSubtaskParams,
+  subtaskId: number
+): NormalizedTodos {
+  const {
+    subtask: { todosId },
+    todoStatus,
+  } = updatedSubtask;
 
-    return {
-        ...todos,
-        [todosId]: {
-            ...todos[todosId],
-            ...(todoStatus && { status: todoStatus }),
-            subtasks: {
-                ...todos[todosId].subtasks,
-                [subtaskId]: {
-                    ...todos[todosId].subtasks[subtaskId],
-                    ...updatedSubtask.subtask
-                }
-            }
-        }
-    }
+  return {
+    ...todos,
+    [todosId]: {
+      ...todos[todosId],
+      ...(todoStatus && { status: todoStatus }),
+      subtasks: {
+        ...todos[todosId].subtasks,
+        [subtaskId]: {
+          ...todos[todosId].subtasks[subtaskId],
+          ...updatedSubtask.subtask,
+        },
+      },
+    },
+  };
 }

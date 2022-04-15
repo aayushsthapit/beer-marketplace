@@ -12,9 +12,9 @@ import Todos, { NormalizedTodos, TodosWithNormalizedSubtasks } from '../domain/t
  * @returns {Promise<Todos[]>}
  */
 export async function getTodos(): Promise<Todos[]> {
-    const todos = await http.get(endpoints.todos);
+  const todos = await http.get(endpoints.todos);
 
-    return todos.data;
+  return todos.data;
 }
 
 /**
@@ -24,9 +24,9 @@ export async function getTodos(): Promise<Todos[]> {
  * @returns {Promise<Todos>}
  */
 export async function createNewTodo(params: { title: string }): Promise<Todos> {
-    const todos = await http.post(endpoints.todos, params);
+  const todos = await http.post(endpoints.todos, params);
 
-    return todos.data;
+  return todos.data;
 }
 
 /**
@@ -36,13 +36,13 @@ export async function createNewTodo(params: { title: string }): Promise<Todos> {
  * @returns {NormalizedTodos}
  */
 export function getNormalizedTodoandSubtasks(todos: Todos[]): NormalizedTodos {
-    const todosWithNormalizedSubtasks = todos.map(todo => ({
-        ...todo,
-        subtasks: normalize<Subtasks>(todo.subtasks, 'id')
-    }));
-    const normalizedTodos = normalize<TodosWithNormalizedSubtasks>(todosWithNormalizedSubtasks, 'id');
+  const todosWithNormalizedSubtasks = todos.map((todo) => ({
+    ...todo,
+    subtasks: normalize<Subtasks>(todo.subtasks, 'id'),
+  }));
+  const normalizedTodos = normalize<TodosWithNormalizedSubtasks>(todosWithNormalizedSubtasks, 'id');
 
-    return normalizedTodos;
+  return normalizedTodos;
 }
 
 /**
@@ -51,12 +51,12 @@ export function getNormalizedTodoandSubtasks(todos: Todos[]): NormalizedTodos {
  * @param {{ status: Status, todosId: number} params
  * @returns { Promise<UpdateTodo>}
  */
-export async function updateTodo(params: { status: Status, todosId: number }): Promise<UpdateTodoParams> {
-    const { todosId, status } = params;
-    const url = `${endpoints.todos}/${todosId}`;
-    const todos = await http.patch(url, { status });
+export async function updateTodo(params: { status: Status; todosId: number }): Promise<UpdateTodoParams> {
+  const { todosId, status } = params;
+  const url = `${endpoints.todos}/${todosId}`;
+  const todos = await http.patch(url, { status });
 
-    return todos.data;
+  return todos.data;
 }
 
 /**
@@ -67,17 +67,21 @@ export async function updateTodo(params: { status: Status, todosId: number }): P
  * @param {number} todosId
  * @returns {NormalizedTodos}
  */
-export function resolveStateForAddedSubtask(todos: NormalizedTodos, newSubtask: Subtasks, todosId: number): NormalizedTodos {
-    return {
-        ...todos,
-        [todosId]: {
-            ...todos[todosId],
-            subtasks: {
-                ...todos[todosId].subtasks,
-                [newSubtask.id]: newSubtask
-            }
-        }
-    }
+export function resolveStateForAddedSubtask(
+  todos: NormalizedTodos,
+  newSubtask: Subtasks,
+  todosId: number
+): NormalizedTodos {
+  return {
+    ...todos,
+    [todosId]: {
+      ...todos[todosId],
+      subtasks: {
+        ...todos[todosId].subtasks,
+        [newSubtask.id]: newSubtask,
+      },
+    },
+  };
 }
 
 /**
@@ -88,15 +92,19 @@ export function resolveStateForAddedSubtask(todos: NormalizedTodos, newSubtask: 
  * @param {number} todosId
  * @returns {NormalizedTodos}
  */
-export function resolveStateForUpdatedTodo(todos: NormalizedTodos, updatedTodo: UpdateTodoParams, todosId: number): NormalizedTodos {
-    const normalizedSubtasks = updatedTodo.subtasks && normalize(updatedTodo.subtasks, 'id');
+export function resolveStateForUpdatedTodo(
+  todos: NormalizedTodos,
+  updatedTodo: UpdateTodoParams,
+  todosId: number
+): NormalizedTodos {
+  const normalizedSubtasks = updatedTodo.subtasks && normalize(updatedTodo.subtasks, 'id');
 
-    return {
-        ...todos,
-        [todosId]: {
-            ...todos[todosId],
-            ...updatedTodo,
-            ...(normalizedSubtasks && { subtasks: normalizedSubtasks })
-        }
-    }
+  return {
+    ...todos,
+    [todosId]: {
+      ...todos[todosId],
+      ...updatedTodo,
+      ...(normalizedSubtasks && { subtasks: normalizedSubtasks }),
+    },
+  };
 }

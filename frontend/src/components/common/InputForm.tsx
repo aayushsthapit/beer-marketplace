@@ -1,8 +1,8 @@
 import React from 'react';
 interface InputFormProps {
-    btnTitle: string;
-    placeHolder: string;
-    onSubmitHandler: (formInput: string) => Promise<void>;
+  btnTitle: string;
+  placeHolder: string;
+  onSubmitHandler: (formInput: string) => Promise<void>;
 }
 
 /**
@@ -11,25 +11,29 @@ interface InputFormProps {
  * @param {InputFormProps} props
  */
 function InputForm(props: InputFormProps) {
-    const { onSubmitHandler, placeHolder, btnTitle } = props;
-    const [formInput, setFormInput] = React.useState<string>('');
+  const { onSubmitHandler, placeHolder, btnTitle } = props;
+  const [formInput, setFormInput] = React.useState<string>('');
 
-    return (
-        <form onSubmit={async (event) => {
-            event.preventDefault();
-            await onSubmitHandler(formInput);
-            setFormInput('');
-        }}>
-            <input
-                className='input-title'
-                name="title"
-                value={formInput}
-                placeholder={placeHolder}
-                onChange={(event) => setFormInput(event.target.value)}
-            />
-            <button type="submit" className="btn">{btnTitle}</button>
-        </form>
-    )
+  return (
+    <form
+      onSubmit={async (event) => {
+        event.preventDefault();
+        await onSubmitHandler(formInput);
+        setFormInput('');
+      }}
+    >
+      <input
+        className="input-title"
+        name="title"
+        value={formInput}
+        placeholder={placeHolder}
+        onChange={(event) => setFormInput(event.target.value)}
+      />
+      <button type="submit" className="btn">
+        {btnTitle}
+      </button>
+    </form>
+  );
 }
 
 export default InputForm;
