@@ -15,8 +15,8 @@ router.get('/', (req: Request, res: Response) => {
 
 router.get('/todos', todosController.getTodos);
 router.post('/todos', validateSchema(todoCreateSchema), todosController.createTodo);
-router.patch('/todos/:todosId(\\d+)',validateSchema(todoUpdateSchema), todosController.updateTodo);
+router.patch('/todos/:todosId(\\d+)', validateSchema(todoUpdateSchema), todosController.updateTodo);
 router.post('/subtasks', validateSchema(subtaskCreateSchema), subtaskController.createSubtask);
-router.patch('/subtasks/:subtasksId(\\d+)',validateSchema(subtaskUpdateSchema), subtaskController.updateSubtask);
+router.patch('/subtasks/:subtasksId(\\d+)', validateSchema(subtaskUpdateSchema), subtaskController.updateSubtask);
 
 export default router;

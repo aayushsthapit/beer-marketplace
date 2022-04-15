@@ -9,9 +9,9 @@ import TodosInterface from '../domain/todos';
  * @returns {Promise<TodosInterface[]>}
  */
 export async function getTodos(): Promise<TodosInterface[]> {
-    const todos: TodosInterface[] = await Todos.getTodos();
+  const todos: TodosInterface[] = await Todos.getTodos();
 
-    return todos;
+  return todos;
 }
 
 /**
@@ -21,16 +21,16 @@ export async function getTodos(): Promise<TodosInterface[]> {
  * @returns {Promise<TodosInterface>}
  */
 export async function createTodo(title: string): Promise<TodosInterface> {
-    const insertParams = {
-        title,
-        status: Status.PENDING
-    }
-    const todos = await Todos.query().insert(insertParams);
+  const insertParams = {
+    title,
+    status: Status.PENDING
+  };
+  const todos = await Todos.query().insert(insertParams);
 
-    return {
-        ...todos,
-        subtasks: []
-    };
+  return {
+    ...todos,
+    subtasks: []
+  };
 }
 
 /**
@@ -41,23 +41,32 @@ export async function createTodo(title: string): Promise<TodosInterface> {
  * @param {Status} status
  */
 export async function updateTodo(todosId: number, status: Status) {
-    let updatedTodo;
+  let updatedTodo;
 
-    if (status === Status.COMPLETED) {
-        await Subtasks.query()
-            .patch({ status })
-            .where({ todosId });
+  if (status === Status.COMPLETED) {
+    await Subtasks.query()
+      .patch({ status })
+      .where({ todosId });
 
-        updatedTodo = await Todos.query().findById(todosId).throwIfNotFound().patch({
-            status
-        }).returning('*').withGraphFetched('subtasks');
-
-        return updatedTodo;
-    }
-
-    updatedTodo = await Todos.query().findById(todosId).throwIfNotFound().patch({
+    updatedTodo = await Todos.query()
+      .findById(todosId)
+      .throwIfNotFound()
+      .patch({
         status
-    }).returning('*');
+      })
+      .returning('*')
+      .withGraphFetched('subtasks');
 
     return updatedTodo;
+  }
+
+  updatedTodo = await Todos.query()
+    .findById(todosId)
+    .throwIfNotFound()
+    .patch({
+      status
+    })
+    .returning('*');
+
+  return updatedTodo;
 }

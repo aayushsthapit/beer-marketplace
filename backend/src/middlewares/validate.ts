@@ -7,12 +7,12 @@ import { Request, Response, NextFunction } from 'express';
  * @param {Joi.ObjectSchema<any>} schema
  */
 export function validateSchema(schema: Joi.ObjectSchema<any>) {
-    return (req: Request, res: Response, next: NextFunction) => {
-        const {error} = schema.validate(req.body);
-        if(!!error){
-            next(error);
-        }
+  return (req: Request, res: Response, next: NextFunction) => {
+    const { error } = schema.validate(req.body);
+    if (!!error) {
+      next(error);
+    }
 
-        next();
-      }
+    next();
+  };
 }

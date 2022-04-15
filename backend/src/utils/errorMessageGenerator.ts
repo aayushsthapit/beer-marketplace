@@ -22,39 +22,38 @@ function dbErrorMessageGenerator(err: any) {
     return {
       code: HttpStatus.BAD_REQUEST,
       message: 'UnknownValidationError'
-    }
+    };
   } else if (err instanceof NotFoundError) {
     return {
       code: HttpStatus.NOT_FOUND,
       message: 'NotFound'
-    }
+    };
   } else if (err instanceof UniqueViolationError) {
     return {
       code: HttpStatus.CONFLICT,
       message: 'UniqueViolation'
-    }
+    };
   } else if (err instanceof NotNullViolationError) {
     return {
       code: HttpStatus.BAD_REQUEST,
       message: 'NotNullViolation'
-    }
+    };
   } else if (err instanceof ForeignKeyViolationError) {
     return {
       code: HttpStatus.CONFLICT,
       message: 'ForeignKeyViolation'
-    }
+    };
   } else if (err instanceof CheckViolationError) {
     return {
       code: HttpStatus.BAD_REQUEST,
       message: 'CheckViolation'
-    }
+    };
   } else if (err instanceof DataError) {
     return {
       code: HttpStatus.BAD_REQUEST,
       message: 'InvalidData'
-    }
-  }
-  else return null;
+    };
+  } else return null;
 }
 
 export default function errorMessageGenerator(err: any, res: Response) {

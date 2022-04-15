@@ -15,7 +15,7 @@
     "start:prod": "tsc && node dist/src/app.js",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,js}'",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,js}'",
-    "prettier": "prettier --single-quote --print-width 120 --write 'src/**/*.js'"
+    "prettier": "prettier --single-quote --print-width 120 --write 'src/**/*.ts'"
   },
   "husky": {
     "hooks": {

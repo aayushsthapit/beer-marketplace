@@ -8,31 +8,31 @@ import TodosInterface from '../domain/todos';
  * Model for table "todos"
  */
 class Todos extends Model {
-    id!: number;
-    title!: string;
-    status!: Status;
-    createdAt!: Date;
-    updatedAt!: Date;
-    subtasks: any; //FIX-ME
+  id!: number;
+  title!: string;
+  status!: Status;
+  createdAt!: Date;
+  updatedAt!: Date;
+  subtasks: any; //FIX-ME
 
-    static get tableName() {
-        return 'todos';
+  static get tableName() {
+    return 'todos';
+  }
+
+  static relationMappings = {
+    subtasks: {
+      relation: Model.HasManyRelation,
+      modelClass: Subtasks,
+      join: {
+        from: 'todos.id',
+        to: 'subtasks.todosId'
+      }
     }
+  };
 
-    static relationMappings = {
-        subtasks: {
-          relation: Model.HasManyRelation,
-          modelClass: Subtasks,
-          join: {
-            from: 'todos.id',
-            to: 'subtasks.todosId'
-          }
-        }
-    }
-
-    // Get list of todos with associated subtasks.
-    static getTodos(): Promise<TodosInterface[]> {
-      return this.query().withGraphFetched('subtasks');
+  // Get list of todos with associated subtasks.
+  static getTodos(): Promise<TodosInterface[]> {
+    return this.query().withGraphFetched('subtasks');
   }
 }
 

@@ -5,8 +5,8 @@ import SubtasksInterface from '../domain/subtasks';
 import { UpdateSubtask } from '../domain/response/subtasks';
 
 interface SubtaskRequestParams {
-    title: string;
-    todosId: number;
+  title: string;
+  todosId: number;
 }
 
 /**
@@ -16,16 +16,18 @@ interface SubtaskRequestParams {
  * @returns {Promise<SubtasksInterface>}
  */
 export async function createSubtask(params: SubtaskRequestParams): Promise<SubtasksInterface> {
-    const { todosId } = params;
-    const insertParams = {
-        ...params,
-        status: Status.PENDING
-    }
-    // Validate if the associated todo exists.
-    await Todos.query().findById(todosId).throwIfNotFound();
-    const subtask = await Subtasks.query().insert(insertParams);
+  const { todosId } = params;
+  const insertParams = {
+    ...params,
+    status: Status.PENDING
+  };
+  // Validate if the associated todo exists.
+  await Todos.query()
+    .findById(todosId)
+    .throwIfNotFound();
+  const subtask = await Subtasks.query().insert(insertParams);
 
-    return subtask;
+  return subtask;
 }
 
 /**
@@ -37,31 +39,29 @@ export async function createSubtask(params: SubtaskRequestParams): Promise<Subta
  * @returns {Promise<UpdateSubtask>}
  */
 export async function updateSubtask(subtaskId: number, status: Status): Promise<UpdateSubtask> {
-    let updatedSubtask: SubtasksInterface;
-    if (status === Status.PENDING) {
-        updatedSubtask = await Subtasks
-            .query()
-            .findById(subtaskId)
-            .throwIfNotFound()
-            .patch({ status })
-            .returning('*') as any;
+  let updatedSubtask: SubtasksInterface;
+  if (status === Status.PENDING) {
+    updatedSubtask = (await Subtasks.query()
+      .findById(subtaskId)
+      .throwIfNotFound()
+      .patch({ status })
+      .returning('*')) as any;
 
-        await Todos.query()
-            .patch({ status })
-            .where({ id: updatedSubtask.todosId });
+    await Todos.query()
+      .patch({ status })
+      .where({ id: updatedSubtask.todosId });
 
-        return {
-            subtask: updatedSubtask,
-            todoStatus: status
-        }
-    }
+    return {
+      subtask: updatedSubtask,
+      todoStatus: status
+    };
+  }
 
-    updatedSubtask = await Subtasks
-        .query()
-        .findById(subtaskId)
-        .throwIfNotFound()
-        .patch({ status })
-        .returning('*') as any;
+  updatedSubtask = (await Subtasks.query()
+    .findById(subtaskId)
+    .throwIfNotFound()
+    .patch({ status })
+    .returning('*')) as any;
 
-    return { subtask: updatedSubtask };
+  return { subtask: updatedSubtask };
 }
