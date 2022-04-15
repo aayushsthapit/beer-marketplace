@@ -2,9 +2,10 @@
 
 This monorepo contains both backend and frontend project for a todo application.
 
-### Tech Stacks:
+### Tech Stack:
 
 **Relational Database:** Postgres <br>
+- ORM: Objection.js
 - DB setup guideline: [Readme](./backend/README.md#database-setup)
 
 **Backend:** Express with Typescript<br>
