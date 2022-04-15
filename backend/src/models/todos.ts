@@ -3,6 +3,7 @@ import { Model } from 'objection';
 import Subtasks from './subtasks';
 import { Status } from '../constants/enums';
 import TodosInterface from '../domain/todos';
+import SubtasksInterface from '../domain/subtasks';
 
 /**
  * Model for table "todos"
@@ -13,7 +14,7 @@ class Todos extends Model {
   status!: Status;
   createdAt!: Date;
   updatedAt!: Date;
-  subtasks: any; //FIX-ME
+  subtasks: SubtasksInterface[];
 
   static get tableName() {
     return 'todos';
