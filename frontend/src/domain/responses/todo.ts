@@ -1,7 +1,7 @@
 import Subtasks from '../subtasks';
 import { Status } from '../../constants/enums';
 
-export interface UpdateTodo {
+export interface UpdateTodoParams {
     id: number;
     title: string;
     status: Status;

@@ -44,16 +44,9 @@ function Todo() {
      */
     async function createNewSubtask(title: string, todosId: number) {
         const newSubtask = await subtasksService.createNewSubtask({ title, todosId });
-        setTodos({
-            ...todos,
-            [todosId]: {
-                ...todos[todosId],
-                subtasks: {
-                    ...todos[todosId].subtasks,
-                    [newSubtask.id]: newSubtask
-                }
-            }
-        });
+        const resolvedTodoState = todosService.resolveStateForAddedSubtask(todos, newSubtask, todosId);
+
+        setTodos(resolvedTodoState);
     }
 
     /**
@@ -64,16 +57,9 @@ function Todo() {
      */
     async function updateTodo(todosId: number, status: Status) {
         const updatedTodo = await todosService.updateTodo({ todosId, status });
-        const normalizedSubtasks = updatedTodo.subtasks && normalize(updatedTodo.subtasks, 'id');
+        const resolvedTodoState = todosService.resolveStateForUpdatedTodo(todos, updatedTodo, todosId);
 
-        setTodos({
-            ...todos,
-            [todosId]: {
-                ...todos[todosId],
-                ...updatedTodo,
-                ...(normalizedSubtasks && { subtasks: normalizedSubtasks })
-            }
-        });
+        setTodos(resolvedTodoState);
     }
 
     /**
@@ -84,22 +70,9 @@ function Todo() {
      */
     async function updateSubtask(subtaskId: number, status: Status) {
         const updatedSubtask = await subtasksService.updateSubtask({ subtaskId, status });
-        const { subtask: { todosId }, todoStatus } = updatedSubtask;
+        const resolvedTodoState = subtasksService.resolveStateForUpdatedSubtask(todos, updatedSubtask, subtaskId);
 
-        setTodos({
-            ...todos,
-            [todosId]: {
-                ...todos[todosId],
-                ...(todoStatus && { status: todoStatus }),
-                subtasks: {
-                    ...todos[todosId].subtasks,
-                    [subtaskId]: {
-                        ...todos[todosId].subtasks[subtaskId],
-                        ...updatedSubtask.subtask
-                    }
-                }
-            }
-        });
+        setTodos(resolvedTodoState);
     }
 
     return (
