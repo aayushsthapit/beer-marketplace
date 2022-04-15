@@ -1,14 +1,15 @@
-Database:
-- Postgres
-DB setup [Readme](./backend/README.md#database-setup)
+## To-do App
 
-Backend:
-- Express with Typescript.
-- Boilerplate taken from https://github.com/aayushsthapit/express-ts-starterpack
+This monorepo contains both backend and frontend project for a todo application.
 
-Backend [Readme](./backend/README.md#backend-server)
+### Tech Stacks:
 
-Web-app:
-- React
+**Relational Database:** Postgres <br>
+- DB setup guideline: [Readme](./backend/README.md#database-setup)
 
-Web-app [Readme](./frontend/README.md)
+**Backend:** Express with Typescript<br>
+- Express boilerplate forked from https://github.com/aayushsthapit/express-ts-starterpack <br>
+- Backend server setup guideline: [Readme](./backend/README.md#backend-server-setup) <br>
+
+**Web-app:** React <br>
+- Web-app setup guideline [Readme](./frontend/README.md)
