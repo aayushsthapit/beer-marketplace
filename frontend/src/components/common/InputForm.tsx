@@ -21,12 +21,13 @@ function InputForm(props: InputFormProps) {
             setFormInput('');
         }}>
             <input
+                className='input-title'
                 name="title"
                 value={formInput}
                 placeholder={placeHolder}
                 onChange={(event) => setFormInput(event.target.value)}
             />
-            <button type="submit">{btnTitle}</button>
+            <button type="submit" className="btn">{btnTitle}</button>
         </form>
     )
 }

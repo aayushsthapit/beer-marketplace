@@ -59,15 +59,17 @@ function TodoListItem(props: TodoListItemProps) {
             {/* List of subtasks of a todo item */}
             <AccordionDetails>
                 <Typography>
-                    {subtasksList.map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id} updateSubtask={updateSubtask}/>)}
+                    {subtasksList.map(subtask => <SubtasksListItem subtask={subtask} key={subtask.id} updateSubtask={updateSubtask} />)}
                 </Typography>
-                <InputForm
-                    btnTitle='New Step'
-                    placeHolder='What are the steps?'
-                    onSubmitHandler={async (title: string) => {
-                        await createNewSubtask(title, id);
-                    }}
-                />
+                <div className="subtask__input">
+                    <InputForm
+                        btnTitle='New Step'
+                        placeHolder='What are the steps?'
+                        onSubmitHandler={async (title: string) => {
+                            await createNewSubtask(title, id);
+                        }}
+                    />
+                </div>
             </AccordionDetails>
         </Accordion>
     )

@@ -48,3 +48,26 @@
   padding: 3px;
   border: 1px solid;
 }
+
+.btn {
+  height: 30px;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.input-title {
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+.subtask__input {
+  padding-top: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
