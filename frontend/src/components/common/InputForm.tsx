@@ -1,18 +1,24 @@
+import React from 'react';
 interface InputFormProps {
     btnTitle: string;
-    formInput: string;
     placeHolder: string;
-    setFormInput: (formInput: string) => void;
-    onSubmitHandler: (formInput: string) => void;
+    onSubmitHandler: (formInput: string) => Promise<void>;
 }
 
+/**
+ * Reusable component for a input field with submit handler.
+ *
+ * @param {InputFormProps} props
+ */
 function InputForm(props: InputFormProps) {
-    const { onSubmitHandler, formInput, setFormInput, placeHolder, btnTitle } = props;
+    const { onSubmitHandler, placeHolder, btnTitle } = props;
+    const [formInput, setFormInput] = React.useState<string>('');
 
     return (
-        <form onSubmit={(event) => {
+        <form onSubmit={async (event) => {
             event.preventDefault();
-            onSubmitHandler(formInput);
+            await onSubmitHandler(formInput);
+            setFormInput('');
         }}>
             <input
                 name="title"

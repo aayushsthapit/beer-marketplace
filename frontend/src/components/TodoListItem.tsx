@@ -26,8 +26,6 @@ function TodoListItem(props: TodoListItemProps) {
         createNewSubtask,
         todo: { id, title, status, subtasks }
     } = props;
-    const [formInput, setFormInput] = React.useState<string>('');
-
     const subtasksList = Object.values(subtasks);
     const completedSubtasksCount = subtasksList.filter(subtask => subtask.status === Status.COMPLETED).length;
     const totalSubtasksCount = subtasksList.length;
@@ -65,12 +63,9 @@ function TodoListItem(props: TodoListItemProps) {
                 </Typography>
                 <InputForm
                     btnTitle='New Step'
-                    formInput={formInput}
-                    setFormInput={setFormInput}
                     placeHolder='What are the steps?'
-                    onSubmitHandler={async () => {
-                        await createNewSubtask(formInput, id);
-                        setFormInput('');
+                    onSubmitHandler={async (title: string) => {
+                        await createNewSubtask(title, id);
                     }}
                 />
             </AccordionDetails>

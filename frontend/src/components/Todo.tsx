@@ -3,7 +3,6 @@ import React from 'react';
 import TodoListItem from './TodoListItem';
 import InputForm from './common/InputForm';
 import { Status } from '../constants/enums';
-import { normalize } from '../utils/normalize';
 import * as todosService from '../services/todos';
 import { NormalizedTodos } from '../domain/todos';
 import * as subtasksService from '../services/subtasks';
@@ -11,7 +10,6 @@ import * as subtasksService from '../services/subtasks';
 // Component for Todo.
 function Todo() {
     const [todos, setTodos] = React.useState<NormalizedTodos>({});
-    const [formInput, setFormInput] = React.useState<string>('');
     const todoList = Object.values(todos);
 
     React.useEffect(() => {
@@ -33,7 +31,6 @@ function Todo() {
             ...todos,
             [newTodo.id]: newTodo
         });
-        setFormInput('');
     }
 
     /**
@@ -80,9 +77,7 @@ function Todo() {
             <h2>Todo App</h2>
             <InputForm
                 btnTitle='New List'
-                formInput={formInput}
                 placeHolder='What to do?'
-                setFormInput={setFormInput}
                 onSubmitHandler={createNewTodo}
             />
 
