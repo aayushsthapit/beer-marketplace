@@ -6,14 +6,14 @@
 2. Check if docker container is up.<br>
    `docker-compose ps`
 3. Enter the bash shell of postgres's container.<br>
-   `docker exec postgres bash`
+   `docker-compose exec postgres bash`
 4. Connect to postgres DB server using default "postgres" user.<br>
    `psql -U postgres`
 5. Create database and DB user that your app eventually uses:
 > CREATE DATABASE todo_app;<br>
 > CREATE USER todo;<br>
 > ALTER USER todo WITH ENCRYPTED password 'todo';<br>
-> GRANT ALL PRIVILEGES ON DATABASE todo_app TO todo<br>
+> GRANT ALL PRIVILEGES ON DATABASE todo_app TO todo;<br>
 6. Create .env file in the /backend file path.
 ```
 # Database
@@ -41,15 +41,18 @@ LOGGING_LEVEL='info'
 yarn migrate
 yarn seed
 ```
-<br>
 
-## Backend Server
+## Backend Server Setup
 
 ### Starting the development server.
 
-Start the development server with the following command. This will start the server in your local machine in port *8000*. <br>
+1. Fetch the required packages. <br>
+`yarn`
+
+
+2. Start the development server with the following command. This will start the server in your local machine in port *8000*. <br>
  `yarn start:dev`
 
 ### Running automated tests.
-To run the automated tests, execute the following command.
+To run the automated tests, execute the following command. <br>
 `yarn test`
