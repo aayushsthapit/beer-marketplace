@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.3",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.1",
@@ -22,9 +23,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "prettier": "prettier --single-quote --print-width 120 --write 'src/**/*.{ts,js,tsx}'"
   },
@@ -47,6 +48,9 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.6.2"
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "prettier": "^2.6.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }
