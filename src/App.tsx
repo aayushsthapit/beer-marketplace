@@ -2,12 +2,12 @@ import React from 'react';
 
 import './App.css';
 import logo from './logo.svg';
-import Todo from './components/Todo';
+import Beers from './components/Beers';
 
 function App() {
   return (
     <div className="App">
-      <Todo />
+      <Beers/>
     </div>
   );
 }
