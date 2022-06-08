@@ -10,18 +10,20 @@ const BeerItem = (props: BeerItemProps) => {
     const ingredientsDetail = `ingredients: ${Object.keys(ingredients).join(', ')}`;
 
     return (
-        <div className="box-border">
-            <img src={image_url} height={90} width={30} title={ingredientsDetail}/>
-            <div className='text-3xl font-bold underline'>
-                <strong>
+        <div className="beer-item--box box-border w-full flex rounded-lg border border-gray-200 shadow-lg my-3 py-5 px-10">
+            <div className="flex-auto w-28 beer-item-img mr-10">
+                <img src={image_url} max-width={23} width={23} title={ingredientsDetail} />
+            </div>
+            <div className="flex-auto text-left h-28 overflow-scroll ">
+                <strong className="text-lg md:text-xl">
                     {name}
                 </strong>
-            </div>
-            <div>
-                {tagline}
-            </div>
-            <div>
-                {description}
+                <div className="text-yellow-600 beer-item--tag">
+                    {tagline}
+                </div>
+                <div className="beer-item--description">
+                    {description}
+                </div>
             </div>
         </div>
     )

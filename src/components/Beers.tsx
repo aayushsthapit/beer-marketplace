@@ -17,7 +17,7 @@ const Beers = () => {
 
     console.log(beerList)
     return (
-        <div>
+        <div className='grid place-items-center grid-cols-2 md:grid-cols-1'>
             {!!beerList.length&&beerList.map(beerDetails => <BeerItem key={beerDetails.id} beerDetails={beerDetails} />)}
         </div>
     )
