@@ -11,11 +11,11 @@ const ROWS_COUNT_PER_PAGE = 10;
  * @returns {Promise<BeerInterface[]>}
  */
 export async function getBeers(page: number): Promise<BeerInterface[]> {
-    const paginationParams = {
-        page,
-        per_page: ROWS_COUNT_PER_PAGE
-    }
-    const beerList = await http.get(endpoints.beers, { params: paginationParams });
-    
-    return beerList.data;
+  const paginationParams = {
+    page,
+    per_page: ROWS_COUNT_PER_PAGE,
+  };
+  const beerList = await http.get(endpoints.beers, { params: paginationParams });
+
+  return beerList.data;
 }

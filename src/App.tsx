@@ -4,7 +4,7 @@ import Beers from './components/Beers';
 function App() {
   return (
     <div className="App">
-      <Beers/>
+      <Beers />
     </div>
   );
 }

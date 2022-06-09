@@ -1,6 +1,6 @@
 // Backend API endpoints
 const endpoints = {
-  beers: '/beers'
+  beers: '/beers',
 };
 
 export default endpoints;
