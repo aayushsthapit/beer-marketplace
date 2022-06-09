@@ -1,4 +1,3 @@
-import React from 'react';
 import BeerInterface from '../domain/responses/beer';
 
 interface BeerItemProps {
@@ -10,11 +9,11 @@ const BeerItem = (props: BeerItemProps) => {
     const ingredientsDetail = `ingredients: ${Object.keys(ingredients).join(', ')}`;
 
     return (
-        <div className="beer-item--box box-border w-full flex rounded-lg border border-gray-200 shadow-lg my-3 py-5 px-10">
-            <div className="flex-auto w-28 beer-item-img mr-10">
+        <div key={id} className="beer-item--box box-border w-full flex rounded-lg border border-gray-200 shadow-lg my-3 py-5 px-10">
+            <div className="w-28 beer-item-img mr-10">
                 <img src={image_url} max-width={23} width={23} title={ingredientsDetail} />
             </div>
-            <div className="flex-auto text-left h-28 overflow-scroll ">
+            <div className="text-left h-28 overflow-scroll ">
                 <strong className="text-lg md:text-xl">
                     {name}
                 </strong>

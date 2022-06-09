@@ -1,0 +1,8 @@
+.btn>svg {
+    width: 20px;
+    display: inline;
+}
+
+.btn:hover {
+    color: rgb(6 182 212);
+}

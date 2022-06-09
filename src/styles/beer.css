@@ -1,13 +1,27 @@
+.beer-item--preloader {
+  width: 768px;
+}
+
+.beer-container {
+  width: auto;
+  padding: 10px;
+}
+
 .beer-item--box {
   max-width: 22rem;
+}
+
+.beer-item--box:hover {
+  background-color: rgb(236 254 255);
+  cursor: pointer;
 }
 
 .beer-item-img {
   max-width: 22px;
 }
 
-.beer-item-img > img {
-  max-width: 22px; 
+.beer-item-img>img {
+  max-width: 22px;
 }
 
 .beer-item--tag {
@@ -23,16 +37,22 @@
 
 
 @media (min-width: 768px) {
+  .beer-container {
+    width: fit-content;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
   .beer-item--box {
     @apply max-w-3xl;
   }
 
   .beer-item-img {
-    max-width: 28px;  
+    max-width: 28px;
   }
 
-  .beer-item-img > img {
-    max-width: 28px; 
+  .beer-item-img>img {
+    max-width: 28px;
   }
 
   .beer-item--tag {
